@@ -6,7 +6,8 @@ This repository contains a firmware made for TL-WR840n router using Openwrt/Lede
 
 ![Logo OpenWrt](https://imgs.unisec.com.br/docs/openwrt/openwrtlogo.png)
 
-OpenWrt is an open-source project that basically gives a device from [this list](https://openwrt.org/toh/start) (normally routers) the possibility to run a very small linux distribution. Why? Because it's easier to set up configuration when you know what you're dealing with, and people usually knows how to do stuff with linux AND for this specifi case, we needed to configure dozens of routers and the easiet way was with Ansible.
+OpenWrt is an open-source project that basically gives a device from [this list](https://openwrt.org/toh/start) (normally routers) the possibility to run a very small linux distribution. Why? Because it's easier to set up configuration when you know what you're dealing with, and people usually knows how to do stuff with linux.
+For this specifi case, we needed to configure dozens of routers and the easiet way was with Ansible. For that, we needed to access the router through SSH on WAN.
 
 ## História
 
@@ -37,12 +38,12 @@ Procendimento:
 2. Ter instalado todas as dependências para criação do firmware. Para isso, vá na pasta ``source`` e siga as instruções:
   - Dê o comando "./scripts/feeds update -a" para fazer download de todos os pacotes e definições encontradas no arquivo feeds.conf do repositório do projeto.
   - Dê o comando "./scripts/feeds install -a" para instalar symlinks para instalar todos os pacotes instalados anteriormente que se encontram na pasta ``package/feeds/``.
-  - Ou se preferir, utilize o script abaixo  para instalação das dependências: ``curl https://dl.unisec.com.br/scripts/openwrt.sh | bash``
 
-3. Agora que todas as dependências foram instaladas, na pasta source do projeto dê o comando ``make menuconfig``, que abrirá um menu para escolher dispositivo, drivers, pacotes e funcionalidades que farão parte do firmware. Um arquivo será gerado a partir das opções escolhidas. Você deve nomeá-lo de ``.config``. Esse arquivo possuirá todas as informações necessárias para a criação do firmware. você pode duplicar este arquivo e salvá-lo em algum lugar seguro para usar futuramente, se for necessário.
+3. Agora que todas as dependências foram instaladas, na pasta source do projeto dê o comando ``make menuconfig``, que abrirá um menu para escolher dispositivo, drivers, pacotes e funcionalidades que farão parte do firmware. Um arquivo será gerado a partir das opções escolhidas. Você deve nomeá-lo ``.config``. Você pode duplicar, mudar o nome deste arquivo e salvá-lo em algum lugar seguro para usar futuramente, se for necessário.
 
 4. Dê o comando ``make V=s`` e espere (muito tempo). Leva por volta de 30 minutos e **é necessário ter pelo menos 15GB de espaço no disco**. É muito importante que o comando **não seja executado como ROOT**. Certifique-se que todo conteúdo da pasta source esteja com as devidas permissões ao seu usuário local (não root) com o comando ``ls -l``
 
+Até agora você aprender a criar uma imagem com todas as possíveis modificações que podem ser feitas com o ``make menuconfig``. Mas, talvez seja necessário uma configuração padrão de rede ou wifi dos seus roteadores.
 
 ## Adicionando Arquivo de Configuração no Firmware
 
@@ -50,7 +51,7 @@ Utilizando o OpenWrt é possível modificar as configuraões iniciais direto na 
 
 Para adicionar arquivos ao firmware:
 
-1. Copie os arquivos para a pasta ``source/files``. Por exemplo: Queremos uma configuração padrão de wireless específica. Criamos um arquivo wireless baseado no que é encontrado em uma imagem anterior, do mesmo dispositivo. O arquivo, no sistema do roteador, deve ficar em ``/etc/config/``, então basta colocar o arquivo na pasta ``source/files/etc/config/wireless``.
+1. Copie os arquivos para a pasta ``source/files``. Por exemplo: Queremos uma configuração padrão de wireless específica. Criamos um arquivo wireless baseado no que é encontrado em uma imagem anterior, do mesmo dispositivo. O arquivo, no sistema do roteador, pode ficar em ``/etc/config/``, então basta colocar o arquivo na pasta ``source/files/etc/config/wireless``. É importante que você tenha certeza de que está colocando a imagem no lugar correto.
 
 ## Queimando o Firmware Criado
 
@@ -104,7 +105,6 @@ config dropbear
         option Port '22'
         option Interface 'lan'
 ```
-
 ### Mudando a senha padrão de Root
 
 First set the password in a live router, then copy /etc/passwd and /etc/shadow from the router to your build environment and include them in the firmware build as custom files.
