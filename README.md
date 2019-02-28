@@ -53,25 +53,6 @@ Para adicionar arquivos ao firmware:
 
 1. Copie os arquivos para a pasta ``source/files``. Por exemplo: Queremos uma configuração padrão de wireless específica. Criamos um arquivo wireless baseado no que é encontrado em uma imagem anterior, do mesmo dispositivo. O arquivo, no sistema do roteador, pode ficar em ``/etc/config/``, então basta colocar o arquivo na pasta ``source/files/etc/config/wireless``. É importante que você tenha certeza de que está colocando a imagem no lugar correto.
 
-## Queimando o Firmware Criado
-
-Após criar ou baixar o firmware de interesse, o procedimento normalmente empregado (para a maioria dos dispositivos) é queimar a imagem via TFTP, que consiste em subir um servidor TFTP/cliente TFTP em uma máquina, inserir o arquivo .bin desejado e fazer este arquivo ser copiado pelo roteador. Cada modelo possui um padrão a ser seguido, por vezes variando entre subir um servidor FTP ou um cliente FTP, com IPs específicos, nome do arquivo a ser copiado diferentes e outros detalhes. Você pode ver no link informações genéricas, mas é necessário buscar por um modelo de dispositivo mais específico para ter um passo a passo mais detalhado, contendo o IP que deve ser usado e o nome do arquivo .bin.
-
-- **Procedimento:**  [Link referência](https://openwrt.org/docs/guide-user/troubleshooting/tftpserver)
-
-OBS: As imagens ``*-factory.bin`` são para a primeira instalação do OpenWRT, quando o dispositivo ainda está com o firmware de fábrica. Você **NÃO DEVE USAR UMA IMAGEM FACTORY.BIN EM UM DISPOSITIVO QUE JÁ CONTÉM UM FIRMWARE OPENWRT**, pois muito provavelmente corromperia o dispositivo.
-
-## Atualizando o firmware de um Dispositivo que já possui OpenWRT
-
-Depois do primeiro flash OpenWRT, para fazer atualizações ou mudar para outro firmware OpenWRT, deve-se usar as imagens ``*-sysupgrade.bin``. O sysupgrade pode ser feito via TFTP, da mesma forma que a imagem anterior foi queimada, mas usando o arquivo sysupgrade.bin, ou acessando o dispositivo por SSH:  
-
-1. Enviar o arquivo sysupgrade.bin para o roteador e colocá-lo na pasta /tmp.  
-Exemplo: ``scp openwrt-ramips-mt76x8-tl-wr840n-v4-squashfs-sysupgrade.bin root@192.168.2.1:/tmp/``  
-
-2. Certifique-se de que está tudo certo e dê o comando: ``root@lede:/# sysupgrade -v /tmp/*.bin``  
-
-OBS: Caso não queira manter nenhum dos arquivos de configuração, adicione o parâmetro -n ao comando.
-
 ## Outras configurações Interessantes
 
 ### Possibilitando SSH via WAN
