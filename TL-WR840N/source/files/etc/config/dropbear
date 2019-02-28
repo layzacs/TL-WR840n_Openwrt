@@ -1,0 +1,13 @@
+# Configuração padrão dropbear
+
+# No password auth for ssh on wan
+config dropbear
+        option Port '22'
+        option RootPasswordAuth 'off'
+        option PasswordAuth 'off'
+
+config dropbear
+        option RootPasswordAuth 'off'
+        option PasswordAuth 'on'
+        option Port '22'
+        option Interface 'lan'
