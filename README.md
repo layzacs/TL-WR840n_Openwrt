@@ -7,7 +7,7 @@ This repository contains a firmware made for TL-WR840n router using Openwrt/Lede
 ![Logo OpenWrt](https://imgs.unisec.com.br/docs/openwrt/openwrtlogo.png)
 
 OpenWrt is an open-source project that basically gives a device from [this list](https://openwrt.org/toh/start) (normally routers) the possibility to run a very small linux distribution. Why? Because it's easier to set up configuration when you know what you're dealing with, and people usually knows how to do stuff with linux.
-For this specifi case, we needed to configure dozens of routers and the easiet way was with Ansible. For that, we needed to access the router through SSH on WAN.
+For this specific case, we needed to configure dozens of routers and the easiest way was to do so with Ansible. For that, we needed to access the device through SSH on WAN.
 
 ## História
 
@@ -27,7 +27,7 @@ Possibilita também transformar roteadores em servidores de arquivo, nós P2P, s
 
 ## Criando o Firmware
 
-As imagens podem ser criadas com o [Buildsystem para distribuição do Linux OpenWRT](https://github.com/lede-project/source).
+As imagens podem ser criadas com o [Buildsystem para distribuição do Linux OpenWRT](https://github.com/openwrt/openwrt).
 
 Quickstart para criação de imagens: https://openwrt.org/docs/guide-developer/quickstart-build-images
 
@@ -94,21 +94,11 @@ https://lede-project.org/docs/guide-developer/use-buildsystem#custom_files 86
 
 https://forum.openwrt.org/viewtopic.php?pid=339453#p339453 57
 
-### Para desativar o botão de reset:
-
-Remover a linha do script /etc/rc.button/reset:
-```
-jffs2reset -y && reboot &
-```
-
-Dessa forma o botão de reset para de funcionar totalmente.
-
 ### Possíveis mensagens de erro durante o ``make V=s``
 
-Relacionado a tar: Mudar as permissõs da pasta source do projeto LEDE. TUDO dentro do diretório source deve ter o usuário não-root como proprietário.
+Ao se deparar com erros durante a criação dos firmwares, é interessante checar se todas as dependências do projeto OpenWRT estão instaladas na máquina e também ter pelo menos 15GB de espaço livre em disco. O processo de criação do firmware cria diversos arquivos temporários que ocupam muito espaço.
 
-Relacionado a cmake: ????  - provavelmente faltava espaço em disco.
-Mensagem de erro: ``make[2]: *** [tools/Makefile:155: tools/cmake/compile] Error 2``
+Relacionado a ``tar``: Mudar as permissõs da pasta source do projeto LEDE. TUDO dentro do diretório source deve ter o usuário não-root como proprietário.
 
 ## Referências
 
